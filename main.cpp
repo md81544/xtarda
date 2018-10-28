@@ -9,8 +9,9 @@
 
 int main()
 {
-    utils::GameGlobals::Instance().screenWidth = 1280;
-    utils::GameGlobals::Instance().screenHeight = 800;
+    using namespace utils;
+    GameGlobals::Instance().screenWidth = 1280;
+    GameGlobals::Instance().screenHeight = 800;
     try
     {
         bool landed = false;
@@ -19,8 +20,8 @@ int main()
         float horizontalSpeed = 0.f;
         sf::RenderWindow window(
             sf::VideoMode(
-                utils::GameGlobals::Instance().screenWidth,
-                utils::GameGlobals::Instance().screenHeight,
+                GameGlobals::Instance().screenWidth,
+                GameGlobals::Instance().screenHeight,
                 32
                 ),
             "Xtarda Rescue",
@@ -38,13 +39,13 @@ int main()
         sf::Sprite sprite( texture );
         sprite.setPosition(
             sf::Vector2f(
-                utils::GameGlobals::Instance().screenWidth / 2,
+                GameGlobals::Instance().screenWidth / 2,
                 0.f
                 )
             );
 
         std::vector<std::unique_ptr<Asteroid>> asteroids;
-        utils::Rnd rnd;
+        Rnd rnd;
         for ( int n = 0; n < 36; ++n )
         {
             std::string filename =
@@ -53,7 +54,7 @@ int main()
                     filename,
                     rnd.getInt(
                         100,
-                        utils::GameGlobals::Instance().screenWidth - 100
+                        GameGlobals::Instance().screenWidth - 100
                         ),     // x
                     100 + n * 15,               // y
                     rnd.getFloat( -2.5f, 2.5f )   // speed
@@ -63,7 +64,7 @@ int main()
 
         sf::RectangleShape ground(
             sf::Vector2f(
-                utils::GameGlobals::Instance().screenWidth,
+                GameGlobals::Instance().screenWidth,
                 10.f
                 )
             );
@@ -71,7 +72,7 @@ int main()
         ground.setPosition(
             sf::Vector2f(
                 0.f,
-                utils::GameGlobals::Instance().screenHeight - 10
+                GameGlobals::Instance().screenHeight - 10
                 )
             );
 
@@ -84,7 +85,7 @@ int main()
         text.setFillColor( sf::Color::Green );
         text.setPosition(
             sf::Vector2f(
-                ( utils::GameGlobals::Instance().screenWidth -
+                ( GameGlobals::Instance().screenWidth -
                   text.getGlobalBounds().width) / 2,
                 10
                 )
@@ -134,7 +135,7 @@ int main()
             }
 
             auto v = sprite.getPosition();
-            if ( v.y >= utils::GameGlobals::Instance().screenHeight -
+            if ( v.y >= GameGlobals::Instance().screenHeight -
                 sprite.getGlobalBounds().height - 10
                 )
             {
@@ -150,6 +151,13 @@ int main()
                         "Landed. " + std::to_string( descentSpeed ) );
                 }
                 landed = true;
+            }
+
+            // Collision checking
+            if ( asteroidCollisionCheck( sprite, asteroids ) )
+            {
+                landed = true; // TODO
+                text.setString( "Crashed into asteroid" );
             }
 
             // Clear the screen (fill it with black color)

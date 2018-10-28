@@ -1,4 +1,8 @@
 #include "utils.h"
+#include "asteroid.h"
+#include "collision.h"
+
+#include <SFML/Graphics.hpp>
 
 namespace utils
 {
@@ -16,5 +20,20 @@ namespace utils
     {
         std::uniform_int_distribution<> dis( from, to );
         return dis( m_gen ); 
+    }
+
+    bool asteroidCollisionCheck(
+        const sf::Sprite& ship,
+        const std::vector<std::unique_ptr<Asteroid>>& asteroids
+        )
+    {
+        for ( const auto& a : asteroids )
+        {
+            if( collision::PixelPerfectTest( ship, a->sprite() ) )
+            {
+                return true;
+            }
+        }
+        return false;
     }
 }

@@ -1,6 +1,12 @@
 #pragma once
 
 #include <random>
+#include <memory>
+#include <vector>
+
+namespace sf { class Sprite; }
+
+class Asteroid;
 
 namespace utils
 {
@@ -28,4 +34,9 @@ private:
     std::random_device m_rd;
     std::mt19937 m_gen;
 };
+
+bool asteroidCollisionCheck(
+    const sf::Sprite& ship,
+    const std::vector<std::unique_ptr<Asteroid>>& asteroids
+    );
 }
