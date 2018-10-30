@@ -163,6 +163,7 @@ int main()
             // Clear the screen (fill it with black color)
             window.clear();
             window.draw( sprite );
+            utils::centre( text );
             window.draw( text );
             window.draw( ground ); //
 

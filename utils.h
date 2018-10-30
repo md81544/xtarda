@@ -1,15 +1,16 @@
 #pragma once
 
+#include <SFML/Graphics.hpp>
+
 #include <random>
 #include <memory>
 #include <vector>
-
-namespace sf { class Sprite; }
 
 class Asteroid;
 
 namespace utils
 {
+
 class GameGlobals
 {
 public:
@@ -39,4 +40,7 @@ bool asteroidCollisionCheck(
     const sf::Sprite& ship,
     const std::vector<std::unique_ptr<Asteroid>>& asteroids
     );
-}
+
+void centre( sf::Text& sp );
+
+} // namespace utils
