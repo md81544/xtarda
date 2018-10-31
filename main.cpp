@@ -142,7 +142,7 @@ int main()
 
             auto v = ship.getPosition();
             if ( v.y >= GameGlobals::Instance().screenHeight -
-                ship.getGlobalBounds().height - 10
+                ship.getLocalBounds().height + 10
                 )
             {
                 // landed
@@ -160,9 +160,10 @@ int main()
             }
 
             // Collision checking
-            if ( asteroidCollisionCheck( ship, asteroids ) )
+            if ( !crashing && asteroidCollisionCheck( ship, asteroids ) )
             {
                 crashing = true; 
+                acceleration *= 5.f;
                 text.setString( "Crashed into asteroid" );
             }
             if( crashing && !landed )
