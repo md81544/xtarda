@@ -7,6 +7,7 @@
 #include <string>
 #include <vector>
 
+
 int main()
 {
     using namespace utils;
@@ -184,3 +185,10 @@ int main()
     }
     return EXIT_SUCCESS;
 }
+
+#ifdef _WIN32
+int WinMain()
+{
+    main();
+}
+#endif
