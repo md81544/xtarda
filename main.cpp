@@ -40,7 +40,7 @@ int main()
         sf::Sprite sprite( texture );
         sprite.setPosition(
             sf::Vector2f(
-                GameGlobals::Instance().screenWidth / 2,
+                GameGlobals::Instance().screenWidth / 2.f,
                 0.f
                 )
             );
@@ -53,11 +53,11 @@ int main()
                 "asteroid" + std::to_string( rnd.getInt(1,4) ) + ".png";
             asteroids.push_back( std::make_unique<Asteroid>(
                     filename,
-                    rnd.getInt(
+                    static_cast<float>( rnd.getInt(
                         100,
                         GameGlobals::Instance().screenWidth - 100
-                        ),     // x
-                    100 + n * 15,               // y
+                        )),                       // x
+                    100.f + n * 15.f,             // y
                     rnd.getFloat( -2.5f, 2.5f )   // speed
                     )
                 );
@@ -65,7 +65,7 @@ int main()
 
         sf::RectangleShape ground(
             sf::Vector2f(
-                GameGlobals::Instance().screenWidth,
+                static_cast<float>( GameGlobals::Instance().screenWidth ),
                 10.f
                 )
             );
@@ -73,7 +73,7 @@ int main()
         ground.setPosition(
             sf::Vector2f(
                 0.f,
-                GameGlobals::Instance().screenHeight - 10
+                GameGlobals::Instance().screenHeight - 10.f
                 )
             );
 

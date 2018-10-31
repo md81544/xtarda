@@ -13,8 +13,9 @@ Rnd::Rnd()
 
 float Rnd::getFloat( float from, float to )
 {
-    std::uniform_real_distribution<> dis( from, to );
-    return dis( m_gen ); 
+    std::uniform_real_distribution<> dis(
+        static_cast<double>(from), static_cast<double>(to) );
+    return static_cast<float>( dis( m_gen ) ); 
 }
 
 int Rnd::getInt( int from, int to )
