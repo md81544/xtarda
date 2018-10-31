@@ -16,6 +16,7 @@ int main()
     try
     {
         bool landed = false;
+        bool crashing = false;
         float acceleration = 0.01f;
         float descentSpeed = 0.2f;
         float horizontalSpeed = 0.f;
@@ -37,13 +38,14 @@ int main()
         {
             return EXIT_FAILURE;
         }
-        sf::Sprite sprite( texture );
-        sprite.setPosition(
+        sf::Sprite ship( texture );
+        ship.setPosition(
             sf::Vector2f(
                 GameGlobals::Instance().screenWidth / 2.f,
                 0.f
                 )
             );
+        ship.setOrigin( { 30.f, 23.f } );
 
         std::vector<std::unique_ptr<Asteroid>> asteroids;
         Rnd rnd;
@@ -112,7 +114,7 @@ int main()
                     }
                 }
             }
-            if ( !landed )
+            if ( !landed && !crashing )
             {
                 // Specific state of keys at this moment:
                 if ( sf::Keyboard::isKeyPressed( sf::Keyboard::Up ) )
@@ -131,13 +133,16 @@ int main()
                 {
                     horizontalSpeed -= 0.05f;
                 }
-                sprite.move( sf::Vector2f( horizontalSpeed, descentSpeed ) );
+            }
+            if ( !landed )
+            {
+                ship.move( sf::Vector2f( horizontalSpeed, descentSpeed ) );
                 descentSpeed += acceleration;
             }
 
-            auto v = sprite.getPosition();
+            auto v = ship.getPosition();
             if ( v.y >= GameGlobals::Instance().screenHeight -
-                sprite.getGlobalBounds().height - 10
+                ship.getGlobalBounds().height - 10
                 )
             {
                 // landed
@@ -155,15 +160,20 @@ int main()
             }
 
             // Collision checking
-            if ( asteroidCollisionCheck( sprite, asteroids ) )
+            if ( asteroidCollisionCheck( ship, asteroids ) )
             {
-                landed = true; // TODO
+                crashing = true; 
                 text.setString( "Crashed into asteroid" );
             }
+            if( crashing && !landed )
+            {
+                ship.setRotation( ship.getRotation() + 2.f );
+            }
+
 
             // Clear the screen (fill it with black color)
             window.clear();
-            window.draw( sprite );
+            window.draw( ship );
             utils::centre( text );
             window.draw( text );
             window.draw( ground ); //
