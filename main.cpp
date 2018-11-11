@@ -32,7 +32,7 @@ int main()
         window.setKeyRepeatEnabled( false );
         window.setMouseCursorVisible( false );
 
-        Ship ship( "spaceship.png" );
+        Ship ship( "resources/spaceship.png" );
         ship.setPosition(
             { GameGlobals::Instance().screenWidth / 2.f, 0.f }
             );
@@ -43,7 +43,8 @@ int main()
         for ( int n = 0; n < 36; ++n )
         {
             std::string filename =
-                "asteroid" + std::to_string( rnd.getInt(1,4) ) + ".png";
+                "resources/asteroid" +
+                std::to_string( rnd.getInt(1,4) ) + ".png";
             asteroids.push_back( std::make_unique<Asteroid>(
                     filename,
                     static_cast<float>( rnd.getInt(
@@ -71,7 +72,7 @@ int main()
             );
 
         sf::Font font;
-        if ( !font.loadFromFile( "zxspectrum.ttf" ) )
+        if ( !font.loadFromFile( "resources/zxspectrum.ttf" ) )
         {
             return EXIT_FAILURE;
         }
