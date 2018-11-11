@@ -1,4 +1,5 @@
 #include "asteroid.h"
+#include "exceptions.h"
 #include "utils.h"
 
 Asteroid::Asteroid(
@@ -11,11 +12,12 @@ Asteroid::Asteroid(
 {
     if ( !m_texture.loadFromFile( filename ) )
     {
-        // TODO - better exception type
-        throw std::runtime_error( "Could not load texture" );
+        throw mgo::XtardaFileException( "Could not load file " + filename );
     }
     m_sprite.setTexture( m_texture );
     m_sprite.setPosition( x, y );
+    auto sz = m_sprite.getLocalBounds();
+    m_sprite.setOrigin( sz.width / 2, sz.height / 2 );
 }
 
 // TODO remove this
@@ -38,8 +40,8 @@ void Asteroid::move()
 {
     auto vec = m_sprite.getPosition();
     vec.x += m_speed;
-    // TODO: remove hard-coded numbers:
     auto fr = m_sprite.getGlobalBounds();
     if ( vec.x < -fr.width || vec.x > utils::GameGlobals::Instance().screenWidth ) m_speed = -m_speed;
     m_sprite.setPosition( vec );
+    m_sprite.setRotation( m_sprite.getRotation() + 1.f );
 }
