@@ -17,8 +17,6 @@ int main()
     GameGlobals::Instance().screenHeight = 800;
     try
     {
-        bool landed = false;
-        bool crashing = false;
         sf::RenderWindow window(
             sf::VideoMode(
                 GameGlobals::Instance().screenWidth,
@@ -106,7 +104,7 @@ int main()
                     }
                 }
             }
-            if ( !landed && !crashing )
+            if ( !ship.landed() && !ship.crashed() )
             {
                 // Specific state of keys at this moment:
                 if ( sf::Keyboard::isKeyPressed( sf::Keyboard::Up ) )
@@ -126,7 +124,7 @@ int main()
                     ship.adjustSpeed( 0, -0.05f );
                 }
             }
-            if ( !landed )
+            if ( !ship.landed() )
             {
                 ship.move();
             }
@@ -148,17 +146,17 @@ int main()
                     text.setString(
                         "Landed. " + std::to_string( descentSpeed ) );
                 }
-                landed = true;
+                ship.setLanded( true );
             }
 
             // Collision checking
-            if ( !crashing && asteroidCollisionCheck( ship.sprite(), asteroids ) )
+            if ( !ship.crashed() && asteroidCollisionCheck( ship.sprite(), asteroids ) )
             {
-                crashing = true; 
+                ship.setCrashed( true );
                 ship.adjustAcceleration( 5.f );
                 text.setString( "Crashed into asteroid" );
             }
-            if( crashing && !landed )
+            if( ship.crashed() && !ship.landed() )
             {
                 ship.sprite().setRotation( ship.sprite().getRotation() + 2.f );
             }

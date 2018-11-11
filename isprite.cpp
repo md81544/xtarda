@@ -12,6 +12,15 @@ ISprite::ISprite( const std::string& filename )
     m_sprite = std::make_unique<sf::Sprite>( m_texture );
 }
 
+ISprite::ISprite( const sf::Image& img )
+{
+    if ( !m_texture.loadFromImage( img ) )
+    {
+        throw mgo::XtardaGeneralException( "Could not load image" );
+    }
+    m_sprite = std::make_unique<sf::Sprite>( m_texture );
+}
+
 void ISprite::draw( sf::RenderWindow& window )
 {
     window.draw( *m_sprite );
