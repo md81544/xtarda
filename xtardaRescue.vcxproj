@@ -120,12 +120,16 @@
   <ItemGroup>
     <ClCompile Include="asteroid.cpp" />
     <ClCompile Include="collision.cpp" />
+    <ClCompile Include="isprite.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="utils.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="asteroid.h" />
     <ClInclude Include="collision.h" />
+    <ClInclude Include="exceptions.h" />
+    <ClInclude Include="isprite.h" />
+    <ClInclude Include="ship.h" />
     <ClInclude Include="utils.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
