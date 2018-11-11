@@ -16,6 +16,7 @@ public:
     virtual void  setHorizontalSpeed( float s);
     virtual void  setPosition( sf::Vector2f pos );
     virtual sf::Vector2f getPosition();
+    virtual void move() = 0;
 protected:
     std::unique_ptr<sf::Sprite> m_sprite;
     float m_verticalSpeed;
