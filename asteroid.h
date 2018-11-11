@@ -3,6 +3,7 @@
 #include <SFML/Graphics.hpp>
 #include <string>
 
+// TODO, inherit from ISprite
 class Asteroid
 {
 public:

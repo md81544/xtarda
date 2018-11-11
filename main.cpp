@@ -1,4 +1,5 @@
 #include "asteroid.h"
+#include "ship.h"
 #include "utils.h"
 
 #include <SFML/Graphics.hpp>
@@ -17,9 +18,6 @@ int main()
     {
         bool landed = false;
         bool crashing = false;
-        float acceleration = 0.01f;
-        float descentSpeed = 0.2f;
-        float horizontalSpeed = 0.f;
         sf::RenderWindow window(
             sf::VideoMode(
                 GameGlobals::Instance().screenWidth,
@@ -32,20 +30,12 @@ int main()
         window.setFramerateLimit( 60 );
         window.setKeyRepeatEnabled( false );
         window.setMouseCursorVisible( false );
-        // Load a sprite
-        sf::Texture texture;
-        if ( !texture.loadFromFile( "spaceship.png" ) )
-        {
-            return EXIT_FAILURE;
-        }
-        sf::Sprite ship( texture );
+
+        Ship ship( "spaceship.png" );
         ship.setPosition(
-            sf::Vector2f(
-                GameGlobals::Instance().screenWidth / 2.f,
-                0.f
-                )
+            { GameGlobals::Instance().screenWidth / 2.f, 0.f }
             );
-        ship.setOrigin( { 30.f, 23.f } );
+        ship.sprite().setOrigin( { 30.f, 23.f } );
 
         std::vector<std::unique_ptr<Asteroid>> asteroids;
         Rnd rnd;
@@ -119,33 +109,33 @@ int main()
                 // Specific state of keys at this moment:
                 if ( sf::Keyboard::isKeyPressed( sf::Keyboard::Up ) )
                 {
-                    descentSpeed -= 0.05f;
+                    ship.adjustSpeed( -0.05f, 0 );
                 }
                 if ( sf::Keyboard::isKeyPressed( sf::Keyboard::Down ) )
                 {
-                    descentSpeed += 0.05f;
+                    ship.adjustSpeed( 0.05f, 0 );
                 }
                 if ( sf::Keyboard::isKeyPressed( sf::Keyboard::Right ) )
                 {
-                    horizontalSpeed += 0.05f;
+                    ship.adjustSpeed( 0, 0.05f );
                 }
                 if ( sf::Keyboard::isKeyPressed( sf::Keyboard::Left ) )
                 {
-                    horizontalSpeed -= 0.05f;
+                    ship.adjustSpeed( 0, -0.05f );
                 }
             }
             if ( !landed )
             {
-                ship.move( sf::Vector2f( horizontalSpeed, descentSpeed ) );
-                descentSpeed += acceleration;
+                ship.move();
             }
 
             auto v = ship.getPosition();
             if ( v.y >= GameGlobals::Instance().screenHeight -
-                ship.getLocalBounds().height + 10
+                ship.sprite().getLocalBounds().height + 10
                 )
             {
                 // landed
+                float descentSpeed = ship.getVerticalSpeed();
                 if ( descentSpeed > 0.4f )
                 {
                     text.setString(
@@ -160,21 +150,21 @@ int main()
             }
 
             // Collision checking
-            if ( !crashing && asteroidCollisionCheck( ship, asteroids ) )
+            if ( !crashing && asteroidCollisionCheck( ship.sprite(), asteroids ) )
             {
                 crashing = true; 
-                acceleration *= 5.f;
+                ship.adjustAcceleration( 5.f );
                 text.setString( "Crashed into asteroid" );
             }
             if( crashing && !landed )
             {
-                ship.setRotation( ship.getRotation() + 2.f );
+                ship.sprite().setRotation( ship.sprite().getRotation() + 2.f );
             }
 
 
             // Clear the screen (fill it with black color)
-            window.clear();
-            window.draw( ship );
+            window.clear();;
+            ship.draw( window );
             utils::centre( text );
             window.draw( text );
             window.draw( ground ); //

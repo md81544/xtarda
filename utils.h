@@ -29,8 +29,8 @@ class Rnd
 {
 public:
     Rnd();
-    float   getFloat( float from, float to );
-    int     getInt( int from, int to );
+    float getFloat( float from, float to );
+    int   getInt( int from, int to );
 private:
     std::random_device m_rd;
     std::mt19937 m_gen;
