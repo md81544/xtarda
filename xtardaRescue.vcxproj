@@ -122,6 +122,7 @@
     <ClCompile Include="collision.cpp" />
     <ClCompile Include="isprite.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="ship.cpp" />
     <ClCompile Include="utils.cpp" />
   </ItemGroup>
   <ItemGroup>

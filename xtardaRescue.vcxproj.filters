@@ -30,6 +30,9 @@
     <ClCompile Include="isprite.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="ship.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="asteroid.h">
