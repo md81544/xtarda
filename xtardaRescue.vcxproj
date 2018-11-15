@@ -120,6 +120,7 @@
   <ItemGroup>
     <ClCompile Include="asteroid.cpp" />
     <ClCompile Include="collision.cpp" />
+    <ClCompile Include="gameLoop.cpp" />
     <ClCompile Include="isprite.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="ship.cpp" />
@@ -129,6 +130,7 @@
     <ClInclude Include="asteroid.h" />
     <ClInclude Include="collision.h" />
     <ClInclude Include="exceptions.h" />
+    <ClInclude Include="gameLoop.h" />
     <ClInclude Include="isprite.h" />
     <ClInclude Include="ship.h" />
     <ClInclude Include="utils.h" />
