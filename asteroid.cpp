@@ -16,19 +16,13 @@ Asteroid::Asteroid(
     m_sprite->setOrigin( sz.width / 2, sz.height / 2 );
 }
 
-// TODO remove this
-sf::Sprite& Asteroid::sprite()
-{
-    return *m_sprite;
-}
-
 void Asteroid::move()
 {
     auto vec = m_sprite->getPosition();
     vec.x += m_horizontalSpeed;
     auto fr = m_sprite->getGlobalBounds();
     if ( vec.x < -fr.width ||
-         vec.x > utils::GameGlobals::Instance().screenWidth
+         vec.x > utils::GameGlobals::screenWidth
         )
     {
         m_horizontalSpeed = -m_horizontalSpeed;

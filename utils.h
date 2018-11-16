@@ -6,23 +6,15 @@
 #include <memory>
 #include <vector>
 
-class Asteroid;
+class ISprite;
 
 namespace utils
 {
 
-class GameGlobals
+struct GameGlobals
 {
-public:
-    static GameGlobals& Instance()
-    {
-        static GameGlobals globals;
-        return globals;
-    }
-    int screenWidth = 800;
-    int screenHeight = 600;
-private:
-    GameGlobals(){}
+    static const int screenWidth { 1280 };
+    static const int screenHeight{  800 };
 };
 
 class Rnd
@@ -38,7 +30,7 @@ private:
 
 bool asteroidCollisionCheck(
     const sf::Sprite& ship,
-    const std::vector<std::unique_ptr<Asteroid>>& asteroids
+    const std::vector<std::unique_ptr<ISprite>>& asteroids
     );
 
 void centre( sf::Text& sp );

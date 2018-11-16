@@ -1,4 +1,5 @@
 #include "asteroid.h"
+#include "gameLoop.h"
 #include "ship.h"
 #include "utils.h"
 
@@ -13,30 +14,17 @@
 int main()
 {
     using namespace utils;
-    GameGlobals::Instance().screenWidth = 1280;
-    GameGlobals::Instance().screenHeight = 800;
     try
     {
-        sf::RenderWindow window(
-            sf::VideoMode(
-                GameGlobals::Instance().screenWidth,
-                GameGlobals::Instance().screenHeight,
-                32
-                ),
-            "Xtarda Rescue",
-            sf::Style::Titlebar | sf::Style::Close
-            );
-        window.setFramerateLimit( 60 );
-        window.setKeyRepeatEnabled( false );
-        window.setMouseCursorVisible( false );
+        GameLoop gameLoop( GameGlobals::screenWidth, GameGlobals::screenHeight );
+        std::vector<std::unique_ptr<ISprite>> asteroids;
 
         Ship ship( "resources/spaceship.png" );
         ship.setPosition(
-            { GameGlobals::Instance().screenWidth / 2.f, 0.f }
+            { GameGlobals::screenWidth / 2.f, 0.f }
             );
         ship.sprite().setOrigin( { 30.f, 23.f } );
 
-        std::vector<std::unique_ptr<Asteroid>> asteroids;
         Rnd rnd;
         for ( int n = 0; n < 36; ++n )
         {
@@ -47,7 +35,7 @@ int main()
                     filename,
                     static_cast<float>( rnd.getInt(
                         100,
-                        GameGlobals::Instance().screenWidth - 100
+                        GameGlobals::screenWidth - 100
                         )),                       // x
                     100.f + n * 15.f,             // y
                     rnd.getFloat( -2.5f, 2.5f )   // speed
@@ -57,7 +45,7 @@ int main()
 
         sf::RectangleShape ground(
             sf::Vector2f(
-                static_cast<float>( GameGlobals::Instance().screenWidth ),
+                static_cast<float>( GameGlobals::screenWidth ),
                 10.f
                 )
             );
@@ -65,7 +53,7 @@ int main()
         ground.setPosition(
             sf::Vector2f(
                 0.f,
-                GameGlobals::Instance().screenHeight - 10.f
+                GameGlobals::screenHeight - 10.f
                 )
             );
 
@@ -78,59 +66,42 @@ int main()
         text.setFillColor( sf::Color::Green );
         text.setPosition(
             sf::Vector2f(
-                ( GameGlobals::Instance().screenWidth -
+                ( GameGlobals::screenWidth -
                   text.getGlobalBounds().width) / 2,
                 10
                 )
             );
+        // set up our callbacks for keypresses
+        gameLoop.registerKeyHandler(
+            sf::Keyboard::Up,
+            [ &ship ] () { ship.adjustSpeed( -0.05f, 0 ); }
+            );
+        gameLoop.registerKeyHandler(
+            sf::Keyboard::Down,
+            [ &ship ] () { ship.adjustSpeed( 0.05f, 0 ); }
+            );
+        gameLoop.registerKeyHandler(
+            sf::Keyboard::Right,
+            [ &ship ] () { ship.adjustSpeed( 0, 0.05f ); }
+            );
+        gameLoop.registerKeyHandler(
+            sf::Keyboard::Left,
+            [ &ship ] () { ship.adjustSpeed( 0, -0.05f ); }
+            );
 
-        // Start game loop
-        while ( window.isOpen() )
+
+        while( gameLoop.isWindowOpen() )
         {
-            // Process events
-            sf::Event event;
-            while ( window.pollEvent( event ) )
-            {
-                if ( event.type == sf::Event::Closed )
-                {
-                    window.close();
-                }
-
-                if ( event.type == sf::Event::KeyPressed )
-                {
-                    if ( event.key.code == sf::Keyboard::Escape )
-                    {
-                        window.close();
-                    }
-                }
-            }
-            if ( !ship.landed() && !ship.crashed() )
-            {
-                // Specific state of keys at this moment:
-                if ( sf::Keyboard::isKeyPressed( sf::Keyboard::Up ) )
-                {
-                    ship.adjustSpeed( -0.05f, 0 );
-                }
-                if ( sf::Keyboard::isKeyPressed( sf::Keyboard::Down ) )
-                {
-                    ship.adjustSpeed( 0.05f, 0 );
-                }
-                if ( sf::Keyboard::isKeyPressed( sf::Keyboard::Right ) )
-                {
-                    ship.adjustSpeed( 0, 0.05f );
-                }
-                if ( sf::Keyboard::isKeyPressed( sf::Keyboard::Left ) )
-                {
-                    ship.adjustSpeed( 0, -0.05f );
-                }
-            }
+            // Process events makes the callbacks specified above
+            // if the keys are pressed
+            gameLoop.processEvents();
             if ( !ship.landed() )
             {
                 ship.move();
             }
 
             auto v = ship.getPosition();
-            if ( v.y >= GameGlobals::Instance().screenHeight -
+            if ( v.y >= GameGlobals::screenHeight -
                 ship.sprite().getLocalBounds().height + 10
                 )
             {
@@ -161,22 +132,24 @@ int main()
                 ship.sprite().setRotation( ship.sprite().getRotation() + 2.f );
             }
 
-
+            // TODO: shouldn't have to call all these individual
+            // bits of the controller
+            gameLoop.clear();
             // Clear the screen (fill it with black color)
-            window.clear();;
-            ship.draw( window );
+            gameLoop.clear();
+            gameLoop.draw( &ship );
             utils::centre( text );
-            window.draw( text );
-            window.draw( ground ); //
+            gameLoop.draw( text );
+            gameLoop.draw( ground );
 
             for ( auto& a : asteroids )
             {
-                window.draw( a->sprite() );
+                gameLoop.draw( a.get() );
                 a->move();
             }
 
             // Display window contents on screen
-            window.display();
+            gameLoop.display();
         }
     }
     catch ( const std::exception& e )

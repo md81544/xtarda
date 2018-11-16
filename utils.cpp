@@ -1,6 +1,7 @@
 #include "utils.h"
 #include "asteroid.h"
 #include "collision.h"
+#include "isprite.h"
 
 #include <SFML/Graphics.hpp>
 
@@ -26,12 +27,12 @@ int Rnd::getInt( int from, int to )
 
 bool asteroidCollisionCheck(
     const sf::Sprite& ship,
-    const std::vector<std::unique_ptr<Asteroid>>& asteroids
+    const std::vector<std::unique_ptr<ISprite>>& asteroids
     )
 {
     for ( const auto& a : asteroids )
     {
-        if( collision::PixelPerfectTest( ship, a->sprite() ) )
+        if( collision::PixelPerfectTest( ship, a->getSprite() ) )
         {
             return true;
         }
@@ -43,7 +44,7 @@ void centre( sf::Text& sp )
 {
     float width = sp.getLocalBounds().width;
     auto v2f = sp.getPosition();
-    v2f.x = ( utils::GameGlobals::Instance().screenWidth - width ) / 2;
+    v2f.x = ( utils::GameGlobals::screenWidth - width ) / 2;
     sp.setPosition( v2f );
 }
 
