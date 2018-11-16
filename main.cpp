@@ -23,7 +23,8 @@ int main()
         ship.setPosition(
             { GameGlobals::screenWidth / 2.f, 0.f }
             );
-        ship.sprite().setOrigin( { 30.f, 23.f } );
+        ship.getSprite().setOrigin( { 30.f, 23.f } );
+        gameLoop.registerDrawable( &(ship.getSprite()) );
 
         Rnd rnd;
         for ( int n = 0; n < 36; ++n )
@@ -41,6 +42,7 @@ int main()
                     rnd.getFloat( -2.5f, 2.5f )   // speed
                     )
                 );
+            gameLoop.registerDrawable( &(asteroids.back()->getSprite()) );
         }
 
         sf::RectangleShape ground(
@@ -56,6 +58,7 @@ int main()
                 GameGlobals::screenHeight - 10.f
                 )
             );
+        gameLoop.registerDrawable( &ground );
 
         sf::Font font;
         if ( !font.loadFromFile( "resources/zxspectrum.ttf" ) )
@@ -71,6 +74,8 @@ int main()
                 10
                 )
             );
+        gameLoop.registerDrawable( &text );
+
         // set up our callbacks for keypresses
         gameLoop.registerKeyHandler(
             sf::Keyboard::Up,
@@ -102,7 +107,7 @@ int main()
 
             auto v = ship.getPosition();
             if ( v.y >= GameGlobals::screenHeight -
-                ship.sprite().getLocalBounds().height + 10
+                ship.getSprite().getLocalBounds().height + 10
                 )
             {
                 // landed
@@ -121,7 +126,7 @@ int main()
             }
 
             // Collision checking
-            if ( !ship.crashed() && asteroidCollisionCheck( ship.sprite(), asteroids ) )
+            if ( !ship.crashed() && asteroidCollisionCheck( ship.getSprite(), asteroids ) )
             {
                 ship.setCrashed( true );
                 ship.adjustAcceleration( 5.f );
@@ -129,27 +134,15 @@ int main()
             }
             if( ship.crashed() && !ship.landed() )
             {
-                ship.sprite().setRotation( ship.sprite().getRotation() + 2.f );
+                ship.getSprite().setRotation( ship.getSprite().getRotation() + 2.f );
             }
 
-            // TODO: shouldn't have to call all these individual
-            // bits of the controller
-            gameLoop.clear();
-            // Clear the screen (fill it with black color)
-            gameLoop.clear();
-            gameLoop.draw( &ship );
             utils::centre( text );
-            gameLoop.draw( text );
-            gameLoop.draw( ground );
-
+            gameLoop.updateDisplay();
             for ( auto& a : asteroids )
             {
-                gameLoop.draw( a.get() );
                 a->move();
             }
-
-            // Display window contents on screen
-            gameLoop.display();
         }
     }
     catch ( const std::exception& e )

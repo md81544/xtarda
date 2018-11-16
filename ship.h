@@ -4,11 +4,6 @@ class Ship : public ISprite
 {
 public:
     Ship( const std::string& filename );
-    // temporary
-    sf::Sprite& sprite()
-    {
-        return *m_sprite;
-    }
     void adjustSpeed( float vertAdjust, float horizAdjust );
     void adjustAcceleration( float mult );
     void move() override;

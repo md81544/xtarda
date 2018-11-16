@@ -30,6 +30,11 @@ void GameLoop::registerKeyHandler(
     m_keyMap[ key ] = callback;
 }
 
+void GameLoop::registerDrawable( sf::Drawable * d )
+{
+    m_drawables.push_back( d );
+}
+
 void GameLoop::processEvents()
 {
     sf::Event event;
@@ -61,23 +66,13 @@ void GameLoop::processEvents()
     }
 }
 
-void GameLoop::clear()
+void GameLoop::updateDisplay()
 {
     m_window->clear();
-}
-
-void GameLoop::draw( ISprite* const sprite )
-{
-    m_window->draw( sprite->getSprite() );
-}
-
-void GameLoop::draw( const sf::Drawable & d )
-{
-    m_window->draw( d );
-}
-
-void GameLoop::display()
-{
+    for ( auto p : m_drawables )
+    {
+        m_window->draw( *p );
+    }
     m_window->display();
 }
 

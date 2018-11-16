@@ -22,13 +22,12 @@ public:
         sf::Keyboard::Key key,
         std::function<void()> callback
         );
+    void registerDrawable( sf::Drawable* d );
     void processEvents();
-    void clear();
-    void draw( ISprite* const sprite );
-    void draw( const sf::Drawable& d );
-    void display();
+    void updateDisplay();
     void exit();
 private:
     std::unique_ptr<sf::RenderWindow> m_window;
+    std::vector< sf::Drawable* > m_drawables;
     std::unordered_map< sf::Keyboard::Key, std::function<void()> > m_keyMap;
 };
