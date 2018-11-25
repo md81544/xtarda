@@ -7,6 +7,7 @@ public:
     void adjustSpeed( float vertAdjust, float horizAdjust );
     void adjustAcceleration( float mult );
     void move() override;
+    bool checkLanded();
     void setLanded( bool landed ) { m_landed = landed; }
     bool landed() { return m_landed; }
     void setCrashed( bool crashed ) { m_crashed = crashed; }

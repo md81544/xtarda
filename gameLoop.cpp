@@ -1,6 +1,8 @@
 #include "gameLoop.h"
 #include "isprite.h"
 
+#include <cassert>
+
 GameLoop::GameLoop( int windowWidth, int windowHeight )
 {
     m_window = std::make_unique<sf::RenderWindow>(
@@ -30,9 +32,12 @@ void GameLoop::registerKeyHandler(
     m_keyMap[ key ] = callback;
 }
 
-void GameLoop::registerDrawable( sf::Drawable * d )
+void GameLoop::registerDrawable( sf::Drawable* d )
 {
-    m_drawables.push_back( d );
+    if ( d )
+    {
+        m_drawables.push_back( d );
+    }
 }
 
 void GameLoop::processEvents()
@@ -71,7 +76,11 @@ void GameLoop::updateDisplay()
     m_window->clear();
     for ( auto p : m_drawables )
     {
-        m_window->draw( *p );
+        assert( p );
+        if ( p )
+        {
+            m_window->draw( *p );
+        }
     }
     m_window->display();
 }

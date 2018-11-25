@@ -23,7 +23,6 @@ int main()
         ship.setPosition(
             { GameGlobals::screenWidth / 2.f, 0.f }
             );
-        ship.getSprite().setOrigin( { 30.f, 23.f } );
         gameLoop.registerDrawable( &(ship.getSprite()) );
 
         Rnd rnd;
@@ -105,10 +104,7 @@ int main()
                 ship.move();
             }
 
-            auto v = ship.getPosition();
-            if ( v.y >= GameGlobals::screenHeight -
-                ship.getSprite().getLocalBounds().height + 10
-                )
+            if ( ship.checkLanded() )
             {
                 // landed
                 float descentSpeed = ship.getVerticalSpeed();

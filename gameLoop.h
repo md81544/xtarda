@@ -22,6 +22,9 @@ public:
         sf::Keyboard::Key key,
         std::function<void()> callback
         );
+    // Allows the GameLoop to keep a list of what to draw.
+    // This list is non-owning. Anything registered here
+    // must outlive the GameLoop instance.
     void registerDrawable( sf::Drawable* d );
     void processEvents();
     void updateDisplay();
