@@ -7,6 +7,12 @@
 class Asteroid : public ISprite
 {
 public:
-    Asteroid( const std::string& filename, float x, float y, float speed );
+    Asteroid(
+        const std::string& filename,
+        float x,
+        float y,
+        float speed,
+        float scale
+        );
     void move() override;
 };

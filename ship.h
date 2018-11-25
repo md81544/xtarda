@@ -3,7 +3,7 @@
 class Ship : public ISprite
 {
 public:
-    Ship( const std::string& filename );
+    Ship( const std::string& filename, float scale );
     void adjustSpeed( float vertAdjust, float horizAdjust );
     void adjustAcceleration( float mult );
     void move() override;

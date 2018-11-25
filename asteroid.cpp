@@ -6,9 +6,10 @@ Asteroid::Asteroid(
     const std::string& filename,
     float x,
     float y,
-    float speed
+    float speed,
+    float scale
     )
-    : ISprite( filename )
+    : ISprite( filename, scale )
 {
     m_horizontalSpeed = speed;
     m_sprite->setPosition( { x, y } );

@@ -23,7 +23,7 @@ int main()
             );
         std::vector<std::unique_ptr<ISprite>> asteroids;
 
-        Ship ship( "resources/spaceship.png" );
+        Ship ship( "resources/spaceship.png", GameGlobals::instance().scaleFactor );
         ship.setPosition(
             { GameGlobals::instance().screenWidth / 2.f, 0.f }
             );
@@ -41,9 +41,10 @@ int main()
                             100,
                             GameGlobals::instance().screenWidth - 100
                             )
-                        ),                       // x
-                    100.f + n * 15.f,             // y
-                    rnd.getFloat( -2.5f, 2.5f )   // speed
+                        ),                         // x
+                    100.f + n * 15.f,              // y
+                    rnd.getFloat( -2.5f, 2.5f ),   // speed
+                    GameGlobals::instance().scaleFactor
                     )
                 );
             gameLoop.registerDrawable( &(asteroids.back()->getSprite()) );

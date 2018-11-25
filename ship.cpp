@@ -1,8 +1,8 @@
 #include "ship.h"
 #include "utils.h"
 
-Ship::Ship( const std::string& filename )
-:   ISprite( filename )
+Ship::Ship( const std::string& filename, float scale )
+:   ISprite( filename, scale )
 {
     m_verticalSpeed = 0.2f;
     m_sprite->setOrigin( { 30.f, 23.f } );
