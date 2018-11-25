@@ -2,6 +2,7 @@
 #include "asteroid.h"
 #include "collision.h"
 #include "isprite.h"
+#include "readconfig.h"
 
 #include <SFML/Graphics.hpp>
 
@@ -25,6 +26,18 @@ int Rnd::getInt( int from, int to )
     return dis( m_gen ); 
 }
 
+void getConfiguration()
+{
+    std::string configFile = "xtarda.cfg";
+    try
+    {
+        mgo::config::Reader cfg( configFile );
+        GameGlobals::instance().scaleFactor =
+            cfg.readFloat( "ScaleFactor", 1.f );
+    }
+    catch ( ... ) {}
+}
+
 bool asteroidCollisionCheck(
     const sf::Sprite& ship,
     const std::vector<std::unique_ptr<ISprite>>& asteroids
@@ -44,7 +57,7 @@ void centre( sf::Text& sp )
 {
     float width = sp.getLocalBounds().width;
     auto v2f = sp.getPosition();
-    v2f.x = ( utils::GameGlobals::screenWidth - width ) / 2;
+    v2f.x = ( utils::GameGlobals::instance().screenWidth - width ) / 2;
     sp.setPosition( v2f );
 }
 

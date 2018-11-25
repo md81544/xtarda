@@ -14,14 +14,18 @@
 int main()
 {
     using namespace utils;
+    utils::getConfiguration();
     try
     {
-        GameLoop gameLoop( GameGlobals::screenWidth, GameGlobals::screenHeight );
+        GameLoop gameLoop(
+            GameGlobals::instance().screenWidth,
+            GameGlobals::instance().screenHeight
+            );
         std::vector<std::unique_ptr<ISprite>> asteroids;
 
         Ship ship( "resources/spaceship.png" );
         ship.setPosition(
-            { GameGlobals::screenWidth / 2.f, 0.f }
+            { GameGlobals::instance().screenWidth / 2.f, 0.f }
             );
         gameLoop.registerDrawable( &(ship.getSprite()) );
 
@@ -34,9 +38,10 @@ int main()
             asteroids.push_back( std::make_unique<Asteroid>(
                     filename,
                     static_cast<float>( rnd.getInt(
-                        100,
-                        GameGlobals::screenWidth - 100
-                        )),                       // x
+                            100,
+                            GameGlobals::instance().screenWidth - 100
+                            )
+                        ),                       // x
                     100.f + n * 15.f,             // y
                     rnd.getFloat( -2.5f, 2.5f )   // speed
                     )
@@ -46,7 +51,7 @@ int main()
 
         sf::RectangleShape ground(
             sf::Vector2f(
-                static_cast<float>( GameGlobals::screenWidth ),
+                static_cast<float>( GameGlobals::instance().screenWidth ),
                 10.f
                 )
             );
@@ -54,7 +59,7 @@ int main()
         ground.setPosition(
             sf::Vector2f(
                 0.f,
-                GameGlobals::screenHeight - 10.f
+                GameGlobals::instance().screenHeight - 10.f
                 )
             );
         gameLoop.registerDrawable( &ground );
@@ -68,7 +73,7 @@ int main()
         text.setFillColor( sf::Color::Green );
         text.setPosition(
             sf::Vector2f(
-                ( GameGlobals::screenWidth -
+                ( GameGlobals::instance().screenWidth -
                   text.getGlobalBounds().width) / 2,
                 10
                 )

@@ -1,5 +1,7 @@
 #pragma once
 
+#include "readconfig.h"
+
 #include <SFML/Graphics.hpp>
 
 #include <random>
@@ -13,8 +15,15 @@ namespace utils
 
 struct GameGlobals
 {
-    static const int screenWidth { 1280 };
-    static const int screenHeight{  800 };
+    static GameGlobals& instance()
+    {
+        static GameGlobals globals;
+        return globals;
+    }
+
+    int   screenWidth { 1280 };
+    int   screenHeight{  800 };
+    float scaleFactor { 1.f };
 };
 
 class Rnd
@@ -27,6 +36,8 @@ private:
     std::random_device m_rd;
     std::mt19937 m_gen;
 };
+
+void getConfiguration();
 
 bool asteroidCollisionCheck(
     const sf::Sprite& ship,

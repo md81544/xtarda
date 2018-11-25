@@ -3,22 +3,24 @@
 
 #include <memory>
 
-ISprite::ISprite( const std::string& filename )
+ISprite::ISprite( const std::string& filename, float scale )
 {
     if ( !m_texture.loadFromFile( filename ) )
     {
         throw mgo::XtardaFileException( "Could not load file " + filename );
     }
     m_sprite = std::make_unique<sf::Sprite>( m_texture );
+    m_sprite->setScale( scale, scale );
 }
 
-ISprite::ISprite( const sf::Image& img )
+ISprite::ISprite( const sf::Image& img, float scale )
 {
     if ( !m_texture.loadFromImage( img ) )
     {
         throw mgo::XtardaGeneralException( "Could not load image" );
     }
     m_sprite = std::make_unique<sf::Sprite>( m_texture );
+    m_sprite->setScale( scale, scale );
 }
 
 void ISprite::draw( sf::RenderWindow& window )

@@ -7,8 +7,8 @@
 class ISprite
 {
 public:
-    ISprite( const std::string& filename );
-    ISprite( const sf::Image& img );
+    ISprite( const std::string& filename, float scale = 1.f );
+    ISprite( const sf::Image& img, float scale = 1.f );
     virtual ~ISprite(){};
     virtual void draw( sf::RenderWindow& window );
     virtual float getVerticalSpeed();

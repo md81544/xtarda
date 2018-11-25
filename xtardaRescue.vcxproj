@@ -123,6 +123,7 @@
     <ClCompile Include="gameLoop.cpp" />
     <ClCompile Include="isprite.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="readconfig.cpp" />
     <ClCompile Include="ship.cpp" />
     <ClCompile Include="utils.cpp" />
   </ItemGroup>
@@ -132,6 +133,7 @@
     <ClInclude Include="exceptions.h" />
     <ClInclude Include="gameLoop.h" />
     <ClInclude Include="isprite.h" />
+    <ClInclude Include="readconfig.h" />
     <ClInclude Include="ship.h" />
     <ClInclude Include="utils.h" />
   </ItemGroup>

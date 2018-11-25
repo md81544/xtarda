@@ -28,7 +28,7 @@ void Ship::move()
 bool Ship::checkLanded()
 {
     auto v = m_sprite->getPosition();
-    if ( v.y >= utils::GameGlobals::screenHeight -
+    if ( v.y >= utils::GameGlobals::instance().screenHeight -
             m_sprite->getLocalBounds().height + 10
         )
     {

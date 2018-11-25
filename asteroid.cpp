@@ -22,7 +22,7 @@ void Asteroid::move()
     vec.x += m_horizontalSpeed;
     auto fr = m_sprite->getGlobalBounds();
     if ( vec.x < -fr.width ||
-         vec.x > utils::GameGlobals::screenWidth
+         vec.x > utils::GameGlobals::instance().screenWidth
         )
     {
         m_horizontalSpeed = -m_horizontalSpeed;
