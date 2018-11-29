@@ -12,7 +12,10 @@ public:
         float x,
         float y,
         float speed,
+        float rotation,
         float scale
         );
     void move() override;
+private:
+    float m_rotation{ 0.f };
 };

@@ -7,6 +7,7 @@ Asteroid::Asteroid(
     float x,
     float y,
     float speed,
+    float rotation,
     float scale
     )
     : ISprite( filename, scale )
@@ -15,6 +16,7 @@ Asteroid::Asteroid(
     m_sprite->setPosition( { x, y } );
     auto sz = m_sprite->getLocalBounds();
     m_sprite->setOrigin( sz.width / 2, sz.height / 2 );
+    m_rotation = rotation;
 }
 
 void Asteroid::move()
@@ -29,5 +31,5 @@ void Asteroid::move()
         m_horizontalSpeed = -m_horizontalSpeed;
     }
     m_sprite->setPosition( vec );
-    m_sprite->setRotation( m_sprite->getRotation() + 1.f );
+    m_sprite->setRotation( m_sprite->getRotation() + m_rotation );
 }

@@ -48,6 +48,7 @@ int main()
                         ),                         // x
                     100.f + n * 15.f,              // y
                     rnd.getFloat( -2.5f, 2.5f ),   // speed
+                    rnd.getFloat( -5.f, 5.f ),   // rotation
                     GameGlobals::instance().scaleFactor
                     )
                 );
