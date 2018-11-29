@@ -9,6 +9,10 @@ ISprite::ISprite( const std::string& filename, float scale )
     {
         throw mgo::XtardaFileException( "Could not load file " + filename );
     }
+    if ( scale != 1.f )
+    {
+        m_texture.setSmooth( true );
+    }
     m_sprite = std::make_unique<sf::Sprite>( m_texture );
     m_sprite->setScale( scale, scale );
 }
