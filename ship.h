@@ -13,7 +13,7 @@ public:
     void setCrashed( bool crashed ) { m_crashed = crashed; }
     bool crashed() { return m_crashed; }
 private:
-    bool  m_landed{ false };     // TODO - use
-    bool  m_crashed{ false };   // TOOD - use
+    bool  m_landed{ false };
+    bool  m_crashed{ false };
     float m_acceleration{ 0.01f };
 };

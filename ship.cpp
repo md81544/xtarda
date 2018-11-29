@@ -10,6 +10,7 @@ Ship::Ship( const std::string& filename, float scale )
 
 void Ship::adjustSpeed( float vertAdjust, float horizAdjust )
 {
+    if ( m_landed ) return;
     m_verticalSpeed   += vertAdjust;
     m_horizontalSpeed += horizAdjust;
 }
