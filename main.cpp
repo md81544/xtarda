@@ -1,6 +1,7 @@
 #include "asteroid.h"
 #include "gameLoop.h"
 #include "ship.h"
+#include "sprite.h"
 #include "utils.h"
 
 #include <SFML/Graphics.hpp>
@@ -22,6 +23,9 @@ int main()
             GameGlobals::instance().screenHeight
             );
         std::vector<std::unique_ptr<ISprite>> asteroids;
+
+        Sprite stars( "resources/stars.jpg", GameGlobals::instance().scaleFactor );
+        gameLoop.registerDrawable( &(stars.getSprite()) );
 
         Ship ship( "resources/spaceship.png", GameGlobals::instance().scaleFactor );
         ship.setPosition(
