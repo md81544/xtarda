@@ -1,5 +1,6 @@
 #include "asteroid.h"
 #include "gameLoop.h"
+#include "initialise.h"
 #include "ship.h"
 #include "sprite.h"
 #include "utils.h"
@@ -22,7 +23,6 @@ int main()
             GameGlobals::instance().screenWidth,
             GameGlobals::instance().screenHeight
             );
-        std::vector<std::unique_ptr<ISprite>> asteroids;
 
         Sprite stars( "resources/stars.jpg", GameGlobals::instance().scaleFactor );
         gameLoop.registerDrawable( &(stars.getSprite()) );
@@ -33,27 +33,8 @@ int main()
             );
         gameLoop.registerDrawable( &(ship.getSprite()) );
 
-        Rnd rnd;
-        for ( int n = 0; n < 36; ++n )
-        {
-            std::string filename =
-                "resources/asteroid" +
-                std::to_string( rnd.getInt(1,4) ) + ".png";
-            asteroids.push_back( std::make_unique<Asteroid>(
-                    filename,
-                    static_cast<float>( rnd.getInt(
-                            100,
-                            GameGlobals::instance().screenWidth - 100
-                            )
-                        ),                         // x
-                    100.f + n * 15.f,              // y
-                    rnd.getFloat( -2.5f, 2.5f ),   // speed
-                    rnd.getFloat( -5.f, 5.f ),   // rotation
-                    GameGlobals::instance().scaleFactor
-                    )
-                );
-            gameLoop.registerDrawable( &(asteroids.back()->getSprite()) );
-        }
+        std::vector<std::unique_ptr<ISprite>> asteroids;
+        init::createAsteroids( gameLoop, asteroids );
 
         sf::RectangleShape ground(
             sf::Vector2f(
