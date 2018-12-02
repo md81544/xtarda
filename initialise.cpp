@@ -5,6 +5,8 @@
 #include "isprite.h"
 #include "utils.h"
 
+#include "SFML/Graphics.hpp"
+
 void init::createAsteroids(
     GameLoop& gameLoop,
     std::vector<std::unique_ptr<ISprite>>& vec
@@ -31,4 +33,25 @@ void init::createAsteroids(
             );
         gameLoop.registerDrawable( &(vec.back()->getSprite()) );
     }
+}
+
+std::unique_ptr<sf::RectangleShape> init::createGround(
+    GameLoop& gameLoop
+    )
+{
+    auto ground = std::make_unique<sf::RectangleShape>(
+        sf::Vector2f(
+            static_cast<float>( utils::GameGlobals::instance().screenWidth ),
+            10.f
+            )
+        );
+    ground->setFillColor( sf::Color( 94, 68, 4 ) );
+    ground->setPosition(
+        sf::Vector2f(
+            0.f,
+            utils::GameGlobals::instance().screenHeight - 10.f
+            )
+        );
+    gameLoop.registerDrawable( ground.get() );
+    return ground;
 }

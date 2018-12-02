@@ -36,20 +36,7 @@ int main()
         std::vector<std::unique_ptr<ISprite>> asteroids;
         init::createAsteroids( gameLoop, asteroids );
 
-        sf::RectangleShape ground(
-            sf::Vector2f(
-                static_cast<float>( GameGlobals::instance().screenWidth ),
-                10.f
-                )
-            );
-        ground.setFillColor( sf::Color( 94, 68, 4 ) );
-        ground.setPosition(
-            sf::Vector2f(
-                0.f,
-                GameGlobals::instance().screenHeight - 10.f
-                )
-            );
-        gameLoop.registerDrawable( &ground );
+        auto ground = init::createGround( gameLoop );
 
         sf::Font font;
         if ( !font.loadFromFile( "resources/zxspectrum.ttf" ) )
