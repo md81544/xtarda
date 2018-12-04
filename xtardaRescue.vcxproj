@@ -121,6 +121,7 @@
     <ClCompile Include="asteroid.cpp" />
     <ClCompile Include="collision.cpp" />
     <ClCompile Include="gameLoop.cpp" />
+    <ClCompile Include="initialise.cpp" />
     <ClCompile Include="isprite.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="readconfig.cpp" />
@@ -132,6 +133,7 @@
     <ClInclude Include="collision.h" />
     <ClInclude Include="exceptions.h" />
     <ClInclude Include="gameLoop.h" />
+    <ClInclude Include="initialise.h" />
     <ClInclude Include="isprite.h" />
     <ClInclude Include="readconfig.h" />
     <ClInclude Include="ship.h" />
