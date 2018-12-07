@@ -1,4 +1,5 @@
 #include "asteroid.h"
+#include "exceptions.h"
 #include "gameLoop.h"
 #include "initialise.h"
 #include "log.h"
@@ -26,8 +27,16 @@ int main()
             GameGlobals::instance().screenHeight
             );
 
-        Sprite stars( "resources/stars.jpg", GameGlobals::instance().scaleFactor );
-        gameLoop.registerDrawable( &(stars.getSprite()) );
+        try
+        {
+            Sprite stars("resources/stars.jpg", GameGlobals::instance().scaleFactor);
+            gameLoop.registerDrawable(&(stars.getSprite()));
+        }
+        catch (const mgo::XtardaFileException&)
+        {
+            // If we can't load the background (it happens on Virtualbox owing to 
+            // [presumably] non-accelerated graphics) then we just carry on
+        }
 
         Ship ship( "resources/spaceship.png", GameGlobals::instance().scaleFactor );
         ship.setPosition(

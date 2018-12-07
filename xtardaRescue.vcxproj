@@ -123,6 +123,7 @@
     <ClCompile Include="gameLoop.cpp" />
     <ClCompile Include="initialise.cpp" />
     <ClCompile Include="isprite.cpp" />
+    <ClCompile Include="log.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="readconfig.cpp" />
     <ClCompile Include="ship.cpp" />
@@ -135,6 +136,7 @@
     <ClInclude Include="gameLoop.h" />
     <ClInclude Include="initialise.h" />
     <ClInclude Include="isprite.h" />
+    <ClInclude Include="log.h" />
     <ClInclude Include="readconfig.h" />
     <ClInclude Include="ship.h" />
     <ClInclude Include="utils.h" />
