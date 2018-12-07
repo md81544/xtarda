@@ -1,13 +1,13 @@
 #include "asteroid.h"
 #include "gameLoop.h"
 #include "initialise.h"
+#include "log.h"
 #include "ship.h"
 #include "sprite.h"
 #include "utils.h"
 
 #include <SFML/Graphics.hpp>
 
-#include <iostream>
 #include <memory>
 #include <string>
 #include <vector>
@@ -16,6 +16,8 @@
 int main()
 {
     using namespace utils;
+    INIT_MGOLOG( "xtarda.log" );
+    MGOLOG( "Initialising" );
     utils::getConfiguration();
     try
     {
@@ -122,7 +124,7 @@ int main()
     }
     catch ( const std::exception& e )
     {
-        std::cout << e.what() << std::endl;
+        MGOLOG( e.what() );
         return EXIT_FAILURE;
     }
     return EXIT_SUCCESS;
