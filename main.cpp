@@ -27,10 +27,12 @@ int main()
             GameGlobals::instance().screenHeight
             );
 
+        std::unique_ptr<Sprite> stars;
         try
         {
-            Sprite stars("resources/stars.jpg", GameGlobals::instance().scaleFactor);
-            gameLoop.registerDrawable(&(stars.getSprite()));
+            stars = std::make_unique<Sprite>(
+                "resources/stars.jpg", GameGlobals::instance().scaleFactor);
+            gameLoop.registerDrawable(&(stars->getSprite()));
         }
         catch (const mgo::XtardaFileException&)
         {
