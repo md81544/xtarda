@@ -36,6 +36,7 @@ int main()
         }
         catch (const mgo::XtardaFileException&)
         {
+            // Do nothing.
             // If we can't load the background (it happens on Virtualbox owing to 
             // [presumably] non-accelerated graphics) then we just carry on
         }
@@ -66,7 +67,6 @@ int main()
                 )
             );
         gameLoop.registerDrawable( &text );
-
         // set up our callbacks for keypresses
         gameLoop.registerKeyHandler(
             sf::Keyboard::Up,
@@ -85,6 +85,12 @@ int main()
             [ &ship ] () { ship.adjustSpeed( 0, -0.05f ); }
             );
 
+        // Weirdly, if this next line is omitted then occasionally,
+        // on Linux, the sf::Sprite contained within ship doesn't
+        // correctly return its x position and therefore seems to
+        // draw somewhere off-screen. This happens in non-optimised
+        // builds as well as -O3. To be investigated further...
+        MGOLOG( ship.getPosition().x );
 
         while( gameLoop.isWindowOpen() )
         {
