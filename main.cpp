@@ -89,7 +89,11 @@ int main()
         // on Linux, the sf::Sprite contained within ship doesn't
         // correctly return its x position and therefore seems to
         // draw somewhere off-screen. This happens in non-optimised
-        // builds as well as -O3. To be investigated further...
+        // builds as well as -O3. To be investigated further.
+        // Update: building a local version of SFML 2.5.1 and linking
+        // against that seems to fix the issue. That's the version 
+        // I've tested Windows against (getting SFML via vcpkg).
+        // To retest when the official ubuntu repos have 2.5.1.
         MGOLOG( ship.getPosition().x );
 
         while( gameLoop.isWindowOpen() )
