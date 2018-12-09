@@ -2,6 +2,7 @@
 #include "asteroid.h"
 #include "collision.h"
 #include "isprite.h"
+#include "log.h"
 #include "readconfig.h"
 
 #include <SFML/Graphics.hpp>
@@ -32,10 +33,17 @@ void getConfiguration()
     try
     {
         mgo::config::Reader cfg( configFile );
+        GameGlobals::instance().screenWidth =
+            static_cast<int>( cfg.readLong( "ScreenWidth", 1200 ) );
+        GameGlobals::instance().screenHeight =
+            static_cast<int>( cfg.readLong( "ScreenHeight", 800 ) );
         GameGlobals::instance().scaleFactor =
             cfg.readFloat( "ScaleFactor", 1.f );
     }
-    catch ( ... ) {}
+    catch ( const std::exception& e )
+    {
+        MGOLOG( e.what() );
+    }
 }
 
 bool asteroidCollisionCheck(

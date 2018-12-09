@@ -18,6 +18,11 @@ void init::createAsteroids(
         std::string filename =
             "resources/asteroid" +
             std::to_string( rnd.getInt(1,4) ) + ".png";
+        // Calculate a speed which is positive or negative
+        // but not too slow or fast
+        float speed = rnd.getFloat( 0.5f, 2.5f );
+        // Now negate half of the speed results:
+        if( rnd.getInt( 0, 1 ) ) speed = -speed;
         vec.push_back( std::make_unique<Asteroid>(
                 filename,
                 static_cast<float>( rnd.getInt(
@@ -26,8 +31,8 @@ void init::createAsteroids(
                         )
                     ),                         // x
                 100.f + n * 15.f,              // y
-                rnd.getFloat( -2.5f, 2.5f ),   // speed
-                rnd.getFloat( -5.f, 5.f ),   // rotation
+                speed,
+                rnd.getFloat( -5.f, 5.f ),     // rotation
                 utils::GameGlobals::instance().scaleFactor
                 )
             );
