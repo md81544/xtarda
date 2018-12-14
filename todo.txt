@@ -1,0 +1,6 @@
+explosions on impact
+men getting on board
+return upwards
+?speed by ship?
+scaling for full screen
+"lives" / levels (number / speed of asteroids increasing?)
