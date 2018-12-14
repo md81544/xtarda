@@ -46,4 +46,6 @@ bool asteroidCollisionCheck(
 
 void centre( sf::Text& sp );
 
+std::string toStringRounded( float num, int decimalPlaces );
+
 } // namespace utils

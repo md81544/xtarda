@@ -113,12 +113,16 @@ int main()
                 if ( descentSpeed > 0.4f )
                 {
                     text.setString(
-                        "Crash!! " + std::to_string( descentSpeed ) );
+                        "Crash!! " +
+                        utils::toStringRounded( descentSpeed, 2 ) + 
+                        " m/s" );
                 }
                 else
                 {
                     text.setString(
-                        "Landed. " + std::to_string( descentSpeed ) );
+                        "Landed. " +
+                        utils::toStringRounded( descentSpeed, 2 ) +
+                        " m/s" );
                 }
                 ship.setLanded( true );
             }

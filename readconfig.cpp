@@ -1,6 +1,7 @@
 #include "readconfig.h"
 #include "boost/algorithm/string.hpp"
 
+#include <cstddef>
 #include <fstream>
 
 namespace mgo {
@@ -16,7 +17,7 @@ Reader::Reader( const std::string& cfgfile )
         throw std::runtime_error( "Could not open " + cfgfile );
     }
     std::string line;
-    size_t n;
+    std::size_t n;
     while ( getline( ifs, line ) )
     {
         boost::trim( line );
@@ -60,10 +61,10 @@ std::string Reader::read(
     // Finally - if the value contains the string ${...} then we
     // should substitute its contents for another variable from the
     // config file.
-    size_t pos;
+    std::size_t pos;
     while ( ( pos = value.find( "${" ) ) != std::string::npos )
     {
-        size_t endPos = value.find( "}", pos );
+        std::size_t endPos = value.find( "}", pos );
         if ( endPos == std::string::npos )
         {
             break; // no terminating brace so return string as is

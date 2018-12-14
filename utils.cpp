@@ -6,6 +6,8 @@
 #include "readconfig.h"
 
 #include <SFML/Graphics.hpp>
+#include <iomanip>
+#include <sstream>
 
 namespace utils
 {
@@ -67,6 +69,13 @@ void centre( sf::Text& sp )
     auto v2f = sp.getPosition();
     v2f.x = ( utils::GameGlobals::instance().screenWidth - width ) / 2;
     sp.setPosition( v2f );
+}
+
+std::string toStringRounded( float num, int decimalPlaces )
+{
+    std::ostringstream oss;
+    oss << std::fixed << std::setprecision(decimalPlaces) << num;
+    return oss.str();
 }
 
 } // namespace utils
